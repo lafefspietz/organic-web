@@ -1,7 +1,6 @@
 {
     "html": [
         "branch.html",
-        "delete-html-files.html",
         "delete-markdown-files.html",
         "delete-php-files.html",
         "delete-text-files.html",
@@ -16,8 +15,7 @@
         "qrcode.html",
         "read-markdown-latex.html",
         "read-markdown.html",
-        "readme.html",
-        "write-a-note.html"
+        "readme.html"
     ],
     "json": [
         "dna.json",
@@ -35,8 +33,6 @@
         "markdown.md"
     ],
     "text": [
-        "note.txt",
-        "terminal.txt",
         "wall.txt"
     ],
     "php": [

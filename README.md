@@ -3,6 +3,7 @@
 
 # Edit files
 
+ - [edit-index.html](edit-index.html)
  - [edit-web-files.html](edit-web-files.html)
  - [edit-text-files.html](edit-text-files.html)
  - [edit-markdown-files.html](edit-markdown-files.html)
@@ -16,26 +17,15 @@
  - [delete-php-files.html](delete-php-files.html)
 
 
-# HTML FILES
+# Other HTML
 
  - [branch.html](branch.html)
- - [delete-html-files.html](delete-html-files.html)
- - [delete-markdown-files.html](delete-markdown-files.html)
- - [delete-php-files.html](delete-php-files.html)
- - [delete-text-files.html](delete-text-files.html)
- - [delete-web-files.html](delete-web-files.html)
- - [edit-index.html](edit-index.html)
- - [edit-markdown-files.html](edit-markdown-files.html)
- - [edit-php-files.html](edit-php-files.html)
- - [edit-text-files.html](edit-text-files.html)
- - [edit-web-files.html](edit-web-files.html)
  - [image-feed.html](image-feed.html)
  - [index.html](index.html)
  - [qrcode.html](qrcode.html)
  - [read-markdown-latex.html](read-markdown-latex.html)
  - [read-markdown.html](read-markdown.html)
  - [readme.html](readme.html)
- - [write-a-note.html](write-a-note.html)
 
 # CSS FILES
 

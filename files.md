@@ -2,7 +2,6 @@
 # HTML FILES
 
  - [branch.html](branch.html)
- - [delete-html-files.html](delete-html-files.html)
  - [delete-markdown-files.html](delete-markdown-files.html)
  - [delete-php-files.html](delete-php-files.html)
  - [delete-text-files.html](delete-text-files.html)
@@ -18,7 +17,6 @@
  - [read-markdown-latex.html](read-markdown-latex.html)
  - [read-markdown.html](read-markdown.html)
  - [readme.html](readme.html)
- - [write-a-note.html](write-a-note.html)
 
 # CSS FILES
 
@@ -41,8 +39,6 @@
 
 # TEXT FILES
 
- - [note.txt](note.txt)
- - [terminal.txt](terminal.txt)
  - [wall.txt](wall.txt)
 
 # PHP FILES AS TEXT
