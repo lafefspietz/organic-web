@@ -2,13 +2,9 @@
 <html>
 <head>
  <!-- 
-README MARKDOWN EDITOR!
 
 -->
 
-<!--Stop Google:-->
-<META NAME="robots" CONTENT="noindex,nofollow">
-    
 <link href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAADw8OAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAABAAEAAAAQAAEAERAAABARAQEREQAAEBEBAAEAAAAREREAAQAAABEAEQABAAAAEQARAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD//wAA//8AAP//AAD//wAA3u8AAN7HAADSgwAA0u8AAMDvAADM7wAAzO8AAP//AAD//wAA//8AAP//AAD//wAA" rel="icon" type="image/x-icon">
 
     
@@ -23,18 +19,18 @@ https://cloud9-sdk.readme.io/docs/language-mode
 -->    
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" type="text/javascript" charset="utf-8"></script>
-    <script src = "https://cdnjs.cloudflare.com/ajax/libs/showdown/1.8.6/showdown.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script>
-            MathJax.Hub.Config({
-                tex2jax: {
-                inlineMath: [['$','$'], ['\\(','\\)']],
-                processEscapes: true,
-                processClass: "mathjax",
-                ignoreClass: "no-mathjax"
-                }
-            });//			MathJax.Hub.Typeset();//tell Mathjax to update the math
-        </script>
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/showdown/1.8.6/showdown.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true,
+        processClass: "mathjax",
+        ignoreClass: "no-mathjax"
+        }
+    });//			MathJax.Hub.Typeset();//tell Mathjax to update the math
+</script>
 <title>README.md EDITOR</title>
 </head>
 <body>
@@ -55,8 +51,6 @@ editor.getSession().setMode("ace/mode/markdown");
 
 editor.getSession().setUseWrapMode(true);
 editor.$blockScrolling = Infinity;
-
-
 
 var converter = new showdown.Converter();
 // for more on options see here:
@@ -98,7 +92,7 @@ lightmode = true;
 document.getElementById("lightdarkbutton").style.color = "black";
 document.getElementById("lightdarkbutton").style.borderColor = "black";
 
-document.getElementById("displayscroll").style.backgroundColor = "#9f8767";
+document.getElementById("displayscroll").style.backgroundColor = "#ffffff";
 document.getElementById("displayscroll").style.color = "black";        
 document.getElementById("lightdarkbutton").innerHTML = "DARK MODE";
 editor.setTheme("ace/theme/github");
@@ -112,8 +106,8 @@ document.getElementById("lightdarkbutton").onclick = function(){
     if(lightmode){
         document.getElementById("lightdarkbutton").style.color = "black";
         document.getElementById("lightdarkbutton").style.borderColor = "black";
-        document.getElementById("lightdarkbutton").style.backgroundColor = "#9f8767";
-        document.getElementById("displayscroll").style.backgroundColor = "#9f8767";
+        document.getElementById("lightdarkbutton").style.backgroundColor = "#eeeeee";
+        document.getElementById("displayscroll").style.backgroundColor = "#ffffff";
         document.getElementById("displayscroll").style.color = "black";        
         document.getElementById("lightdarkbutton").innerHTML = "DARK MODE";
         editor.setTheme("ace/theme/github");
@@ -143,11 +137,11 @@ document.getElementById("lightdarkbutton").onclick = function(){
 <style>
 body{
     overflow:hidden;
-    font-family:COMIC SANS MS;
-    background-color:#9f8767;
+    font-family:Arial;
+    background-color:#eeeeee;
 }
 input{
-    font-family:COMIC SANS MS;
+    font-family:Arial;
     color:white;
 }
 h1{
@@ -171,13 +165,13 @@ A{
     left:55%;
     right:1em;
     bottom:1em;
-    font-family:COMIC SANS MS;
+    font-family:Arial;
     top:5em;
     border:solid;
     border-width:3px;
     overflow:scroll;
     padding: 1em 1em 1em 1em;
-    background-color:#9f8767;
+    background-color:#ffffff;
 }
 #displayscroll img{
     max-width:70%;

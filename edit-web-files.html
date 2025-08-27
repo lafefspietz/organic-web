@@ -247,7 +247,6 @@ document.getElementById("lightdarkbutton").onclick = function(){
         document.getElementById("lightdarkbutton").style.borderColor = "black";
         
         document.getElementById("filescroll").style.backgroundColor = "white";
-        document.getElementById("homelink").style.color = "blue";
 
         document.getElementById("filescroll").style.color = "black";        
         document.getElementById("currentfilename").style.backgroundColor = "#eeeeee";
@@ -259,7 +258,7 @@ document.getElementById("lightdarkbutton").onclick = function(){
         document.getElementById("lightdarkbutton").innerHTML = "DARK MODE";
         editor.setTheme("ace/theme/github");
 
-        var links = document.getElementById("filescroll").getElementsByTagName("a");
+        var links = document.getElementsByTagName("a");
         for(var index = 0;index < links.length;index++){
             links[index].style.color = "blue";
         }
@@ -271,8 +270,7 @@ document.getElementById("lightdarkbutton").onclick = function(){
         
         document.body.style.backgroundColor = "#404040";
         document.body.style.color = "white";
-        document.getElementById("homelink").style.color = "#ff2cb4";
-        
+
         document.getElementById("filescroll").style.backgroundColor = "#101010";        
         document.getElementById("filescroll").style.color = "white";        
         
@@ -283,7 +281,7 @@ document.getElementById("lightdarkbutton").onclick = function(){
         document.getElementById("lightdarkbutton").innerHTML = "LIGHT MODE";        
         editor.setTheme("ace/theme/vibrant_ink");
 
-        var links = document.getElementById("filescroll").getElementsByTagName("a");
+        var links = document.getElementsByTagName("a");
         for(var index = 0;index < links.length;index++){
             links[index].style.color = "#ff2cb4";
         }        
