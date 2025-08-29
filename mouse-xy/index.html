@@ -18,6 +18,9 @@ xy.y = y from 0 to 1
 </head>
 <body> 
 <a id = "editlink" href = "edit-index.html">edit-index.html</a>
+<div id = "help">
+    Move mouse in rectangle to set x and y, scroll mouse wheel to set z, click to lock. Data saved in <a href = "xy.json">xy.json</a>.
+</div>
 <style>
 body{
     font-family:Arial;
@@ -36,6 +39,16 @@ main{
     left:100px;
     top:100px;
 }
+#help{
+    position:absolute;
+    left:5px;
+    right:5px;
+    bottom:5px;
+    height:70px;
+    border:solid;
+    font-family:courier;
+    font-size:16px;
+}
 </style>
 <script>
 function setup() {
@@ -52,59 +65,65 @@ function setup() {
 xy = {};
 xy.x = 0;// from 0 to 1
 xy.y = 0;// from 0 to 1
+xy.z = 0;// integers with no bound, always restarts to zero on reload then scrolls up and down
+
+lock = false;
 
 function draw(){
+    if(!lock){
+        background(240,240,240);//half way between black and white, grey
+        xy.x = mouseX/width;// from 0 to 1
+        xy.y = (height - mouseY)/height;// from 0 to 1
+        //limit to the range from 0 to 1
+        if(xy.x > 1){
+            xy.x = 1;
+        }
+        if(xy.x < 0){
+            xy.x = 0;
+        }
+        if(xy.y > 1){
+            xy.y = 1;
+        }
+        if(xy.y < 0){
+            xy.y = 0;
+        }
+        xy.x = round(xy.x*1000)/1000;//round to 3 digits
+        xy.y = round(xy.y*1000)/1000;//round to 3 digits
+        savejson();//save json file
     
-    background(128,128,128);//half way between black and white, grey
-    xy.x = mouseX/width;// from 0 to 1
-    xy.y = (height - mouseY)/height;// from 0 to 1
-    //limit to the range from 0 to 1
-    if(xy.x > 1){
-        xy.x = 1;
+        textSize(50);
+        fill("red");
+        stroke("red");
+        text("x = " + xy.x.toString(),100,100);
+        textSize(25);
+        for(var index = 1;index < 10;index++){
+            line(index*width/10,height,index*width/10,0);
+            text((index/10).toString(),index*width/10 + 10,height - 10);
+            text((index/10).toString(),index*width/10 + 10, 30);
+        }
+        textSize(50);
+        fill("green");
+        stroke("green");
+        text("y = " + xy.y.toString(),100,200);
+        textSize(25);
+        for(var index = 1;index < 10;index++){
+            line(0,index*height/10,width,index*height/10);
+            text(((10 - index)/10).toString(),10,index*height/10 - 10);
+            text(((10 - index)/10).toString(),width - 50,index*height/10 - 10);
+        }
+    
+        stroke("black");
+        fill("black");
+        noFill();
+        circle(mouseX,mouseY,50);
+        line(mouseX,mouseY - 50,mouseX,mouseY + 50);
+        line(mouseX - 50,mouseY,mouseX + 50,mouseY);
+        textSize(50);
+        fill("blue");
+        stroke("blue");
+    
+        text("z = " + xy.z.toString(), 100, 300);
     }
-    if(xy.x < 0){
-        xy.x = 0;
-    }
-    if(xy.y > 1){
-        xy.y = 1;
-    }
-    if(xy.y < 0){
-        xy.y = 0;
-    }
-    xy.x = round(xy.x*1000)/1000;//round to 3 digits
-    xy.y = round(xy.y*1000)/1000;//round to 3 digits
-    savejson();//save json file
-
-    textSize(50);
-    fill("red");
-    stroke("red");
-    text("x = " + xy.x.toString(),100,100);
-    textSize(25);
-    for(var index = 1;index < 10;index++){
-        line(index*width/10,height,index*width/10,0);
-        text((index/10).toString(),index*width/10 + 10,height - 10);
-        text((index/10).toString(),index*width/10 + 10, 30);
-    }
-    textSize(50);
-    fill("blue");
-    stroke("blue");
-    text("y = " + xy.y.toString(),100,200);
-    textSize(25);
-    for(var index = 1;index < 10;index++){
-        line(0,index*height/10,width,index*height/10);
-        text(((10 - index)/10).toString(),10,index*height/10 - 10);
-        text(((10 - index)/10).toString(),width - 50,index*height/10 - 10);
-
-    }
-
-
-    stroke("black");
-    fill("black");
-    noFill();
-    circle(mouseX,mouseY,50);
-    line(mouseX,mouseY - 50,mouseX,mouseY + 50);
-    line(mouseX - 50,mouseY,mouseX + 50,mouseY);
-
 }
 
 function savejson(){
@@ -114,7 +133,22 @@ function savejson(){
     httpc.send("data="+encodeURIComponent(JSON.stringify(xy,null,"    "))+"&filename=xy.json");//send text to save-file.php
 }
 
+direction = '';
+function mouseWheel(event) {
+  if (event.delta > 0) {
+    direction = 'mouse wheel down';
+    xy.z--;
+  } else {
+    direction = 'mouse wheel up';
+    xy.z++;
+  }
+  // Uncomment to prevent any default behavior.
+  // return false;
+}
 
+function mouseClicked() {
+  lock = !lock;
+}
 
 </script>
 </body>

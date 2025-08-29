@@ -19,7 +19,8 @@
     ],
     "json": [
         "dna.json",
-        "links.json"
+        "links.json",
+        "xy.json"
     ],
     "css": [
         "markdown.css"
