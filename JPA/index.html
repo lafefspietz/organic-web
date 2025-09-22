@@ -12,22 +12,52 @@
    <script src="https://cdn.jsdelivr.net/npm/p5@1.7.0/lib/p5.js"></script>
 </head>
 <body> 
-<a id = "editlink" href = "edit-index.html">edit-index.html</a>
+<div id = "controlscroll">
+    <h1>VNA CONTROLS</h1>
+    <table id = "vnatable"></table>
+    <H1>PUMP CONTROLS</H1>
+    <table id = "pumptable"></table>
+<p>
+    <a href = "edit-index.html">edit-index.html</a>
+</p>
+<p>
+    <a href = "edit-web-files.html">edit-web-files.html</a>
+    
+</p>    
+</div>
 <style>
 body{
     font-family:Arial;
     background-color:#404040;
+    color:#0CCDDF;
+}
+input{
+    color:#00ff00;
+    background-color:black;
+    font-family:courier;
+    border-color:#0CCDDF;
+}
+h1{
+    text-align:center;
+}
+#controlscroll{
+    overflow:scroll;
+    position:absolute;
+    left:0px;
+    top:0px;
+    bottom:0px;
+    padding-left:1em;
+    padding-right:1em;
+    background-color:#0a0a0a;
+}
+table{
+    border:solid;
+    border-color:#0CCDDF;
 }
 a{
     color:#ff2cb4;
 }
-#editlink{
-    position:absolute;
-    left:5px;
-    botom:5px;
-    z-index:2;
-    font-size:2em;
-}
+
 main{
     position:absolute;
     right:0px;
@@ -36,6 +66,48 @@ main{
 }
 </style>
 <script>
+
+document.getElementById("controlscroll").style.right = (innerHeight + 5).toString() + "px";
+
+
+vna = {};
+vna.power = -30;//dBm
+vna.ifbw = 2000;//Hz
+vna.fstart = 6.25;//GHz
+vna.fstop = 6.75;//Ghz
+vna.fcenter = 6.5;//Ghz
+vna.fspan = 0.5;//Ghz
+vna.numpoints = 401;
+for(attribute in vna){
+    var newtr = document.createElement("TR");
+    var newtd = document.createElement("TD");
+    newtr.appendChild(newtd);
+    newtd.innerHTML = attribute + ": ";
+    document.getElementById("vnatable").appendChild(newtr);
+    var newtd = document.createElement("TD");
+    newtr.appendChild(newtd);
+    var newinput =  document.createElement("INPUT");
+    newtd.appendChild(newinput);
+    newinput.value = vna[attribute];
+}
+
+pump = {};
+pump.frequency = 13.0;//GHz
+pump.on = true;
+pump.power = 3.43;
+
+for(attribute in pump){
+    var newtr = document.createElement("TR");
+    var newtd = document.createElement("TD");
+    newtr.appendChild(newtd);
+    newtd.innerHTML = attribute + ": ";
+    document.getElementById("pumptable").appendChild(newtr);
+    var newtd = document.createElement("TD");
+    newtr.appendChild(newtd);
+    var newinput =  document.createElement("INPUT");
+    newtd.appendChild(newinput);
+    newinput.value = pump[attribute];
+}
 
 
 v_digit_index = -1;
@@ -52,6 +124,18 @@ httpc.onreadystatechange = function() {
 };
 httpc.open("GET", "load-file.php?filename=control.json", true);
 httpc.send();
+
+traceindex= 0;
+tracejson = {};
+var httpc = new XMLHttpRequest();
+httpc.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        tracejson = JSON.parse(this.responseText);
+    }
+};
+httpc.open("GET", "load-file.php?filename=ampdatajson/trace" + traceindex.toString() + ".json", true);
+httpc.send();
+
 
 function setup() {
     createCanvas(innerHeight-5,innerHeight-5);    
@@ -127,17 +211,67 @@ function draw(){
     strokeWeight(10);  
     line(0,0.6*height,width,0.6*height);
     noFill();
+/*
     beginShape();
     for(var x = 0;x < width;x++){
         vertex(x,0.3*height + randomGaussian(0,10) + Math.exp(-((x - width/2)**2)/100000)*0.15*height*Math.sin(2*Math.PI*x/100));
     }
     endShape();
-    
+  */
+  
     textSize(width*0.1);
     stroke("red");
     fill('red');
     text("JPA",10,width*0.1);
     
+    var httpc = new XMLHttpRequest();
+    httpc.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            tracejson = JSON.parse(this.responseText);
+        }
+    };
+    httpc.open("GET", "load-file.php?filename=ampdatajson/trace" + traceindex.toString() + ".json", true);
+    httpc.send();
+    
+    stroke("#0CCDDF");
+    noFill();
+    strokeWeight(10);  
+    beginShape();
+    for(var index = 0;index < tracejson.fghz.length;index++){
+        vertex(map(index,0,tracejson.fghz.length,0,width),map(tracejson.gaindb[index],0,30,0.6*height,0));
+    }
+    endShape();
+
+    stroke("red");
+    noFill();
+    strokeWeight(5);  
+    beginShape();
+    for(var index = 0;index < tracejson.fghz.length;index++){
+        vertex(map(index,0,tracejson.fghz.length,0,width),map(tracejson.gaindbfit[index],0,30,0.6*height,0));
+    }
+    endShape();
+
+    stroke("blue");
+    
+    peak = map(tracejson.curvepeak,0,30,0,0.6*height);
+    fwhm = map(tracejson.fwhm,0,tracejson.fghz[tracejson.fghz.length-1] - tracejson.fghz[0],0,width);
+    f0 = map(tracejson.f0,tracejson.fghz[0],tracejson.fghz[tracejson.fghz.length-1],0,width);
+
+    line(0,0.6*height - peak,width,0.6*height - peak);
+    line(f0,0,f0,height);
+    line(f0 + 0.5*fwhm,0,f0 + 0.5*fwhm,height);
+    line(f0 - 0.5*fwhm,0,f0 - 0.5*fwhm,height);
+    
+    fill("#ff00ff20");
+    rect(f0 - 0.5*fwhm,0.6*height,fwhm,-peak);
+  //  rect(f0 ,0.6*height,100,100);
+  //  console.log(fwhm);
+    //rect(f0-0.5*fwhm,0.6*height,peak,fwhm);
+  
+    traceindex++;
+    if(traceindex >= 100){
+        traceindex = 0;
+    }
 }
 
 
